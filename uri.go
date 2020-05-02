@@ -9,6 +9,8 @@ import (
 	"net/url"
 )
 
+var testableHTTPGet (func(url string) (resp *http.Response, err error)) = http.Get
+
 func getURIMD5(uri string) (fullURI string, MD5 string) {
 
 	fullURI = getFullURI(uri)
@@ -51,7 +53,7 @@ func getFullURI(uri string) string {
 
 func getMessageBody(uri string) (body []byte, err error) {
 
-	resp, err := http.Get(uri)
+	resp, err := testableHTTPGet(uri)
 
 	if err == nil {
 		body, err = ioutil.ReadAll(resp.Body)
